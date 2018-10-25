@@ -11,18 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('articles', 'ArticleController@index')->name('articles.index'); // READ
 
-Route::get('contact/{nom?}', function ($nom = '') {
-    return "Salut $nom";
-});
+Route::get('articles/create', 'ArticleController@create')->name('articles.create');  //Create
+Route::post('articles/store', 'ArticleController@store')->name('articles.store');    //Store
 
-Route::get('user/{id}/{name}', 'PageController@user')->where(['id' => '[0-9]+', 'name' => '[a-zA-Z]+']);
-
-
-Route::get('articles', 'ArticleController@index'); // READ
-Route::get('articles/create', 'ArticleController@store');
-Route::get('articles/update', 'ArticleController@update');
-Route::get('articles/destroy', 'ArticleController@destroy');
+Route::get('articles/update', 'ArticleController@update')->name('articles.update');  //Update
+Route::get('articles/destroy', 'ArticleController@destroy')->name('articles.destroy'); //Delete

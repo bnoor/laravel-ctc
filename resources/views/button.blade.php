@@ -1,1 +1,1 @@
-<a href="#" class="btn btn-danger">{{$slot}}</a>
+<a href="#" class="btn btn-success">{{ $slot }}</a>

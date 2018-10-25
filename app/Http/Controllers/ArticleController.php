@@ -11,18 +11,26 @@ class ArticleController extends Controller
     public function index()
     {
         // return DB::table('articles')->get();
-        $articles = Article::all();
+        $search = request('search');
+
+        $articles = Article::recherche($search)->with('user')->paginate(10);
         return view("articles.index", ['articles' => $articles]);
+    }
+
+ public function create()
+    {
+        return view('articles.create');
     }
 
     public function store()
     {
-        Article::insert([
-            'name' => 'Salut',
-            'body' => 'lorem ipsum',
-            'user_id' => 1,
-            'published_at' => Carbon::now(),
+        request()->validate([
+            'name' => 'required|min:4|unique:articles',
+            'published_at' => 'required',
+            'body' => 'required',
         ]);
+        Article::create(request()->all() + ['user_id' => 1]);
+        return redirect()->route('articles.index');
     }
 
     public function update()
